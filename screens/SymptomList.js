@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View,ScrollView} from 'react-native';
 import React, {useState,useEffect} from 'react'
+import { v4 as uuidv4 } from 'uuid';
 
 const SymptomList = () => {
 
@@ -29,7 +30,7 @@ const SymptomList = () => {
       <Text style={styles.title}>List of Symptoms</Text>
       {symptomList.map((symptom) => {
           return(
-              <View style={styles.text}>
+              <View key={uuidv4()} style={styles.text}>
                 <Text>{symptom}</Text>
               </View>
           )
