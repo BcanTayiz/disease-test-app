@@ -1,10 +1,28 @@
 import { StyleSheet, Text, View,ScrollView} from 'react-native';
 import React, {useState,useEffect} from 'react'
 import { v4 as uuidv4 } from 'uuid';
+import { Searchbar } from 'react-native-paper';
 
 const DiseaseList = () => {
 
     const [diseaseList,setDiseaseList] = useState([])
+    const [searchQuery, setSearchQuery] = useState('');
+    
+    const onChangeSearch = query => {
+        setSearchQuery(query);    
+    }
+
+    const getSearchQuery = (query) => {
+        let listElement = []
+        diseaseList.filter(element =>{
+            if(element.substring(0,query.length).toLowerCase() == query.toLowerCase()){
+                listElement.push(element)
+            }
+        }
+        )
+        return listElement
+    }
+    
 
     const getData = async () => {
         const res = await fetch("https://disease-detection.p.rapidapi.com/disease_list/", {
@@ -17,7 +35,6 @@ const DiseaseList = () => {
 
         let data = await res.json()
         setDiseaseList(data)
-        console.log(data)
     }
 
     useEffect(() => {
@@ -28,7 +45,12 @@ const DiseaseList = () => {
     <View style={styles.container}>
         <ScrollView>
       <Text style={styles.title}>List of Diseases</Text>
-      {diseaseList.map((disease) => {
+      <Searchbar
+      placeholder="Search"
+      onChangeText={onChangeSearch}
+      value={searchQuery}
+    />
+      {getSearchQuery(searchQuery).map((disease) => {
           return(
               <View key={uuidv4()} style={styles.text}>
                 <Text>{disease}</Text>

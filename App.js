@@ -27,6 +27,7 @@ function Home() {
 }
 
 
+
 export default function App() {
   return (
     <NavigationContainer>
@@ -36,6 +37,7 @@ export default function App() {
           component={Home}
           options={{ headerShown: false }}
         />
+        
         <Stack.Screen name="Description" component={Description} />
         <Stack.Screen name="Precaution" component={Precaution} />
         <Stack.Screen name="Severity" component={Severity} />
